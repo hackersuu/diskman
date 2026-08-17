@@ -17,7 +17,6 @@
 - ⚡ **Otomatik Dosya Sistemi Tespiti:** `blkid` entegrasyonu sayesinde `ext4`, `btrfs`, `xfs`, `vfat`, `exfat`, `ntfs` vb. dosya sistemlerini otomatik tanır.
 - 🛠️ **Hafif ve Oneshot:** Oturum başladığında çalışır, tüm tanımlı diskleri bağlayıp bellek harcamadan sonlanır (`Type=oneshot`).
 - 🧪 **Dry-Run Modu:** `--dry-run` parametresiyle herhangi bir işlem yapmadan önce neyin nereye bağlanacağını simüle edebilme.
-- 📦 **Arch Linux (PKGBUILD) Desteği:** Pacman paketi oluşturmaya ve AUR'a yüklemeye hazır.
 
 ---
 
