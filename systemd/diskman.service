@@ -7,8 +7,8 @@ After=default.target
 [Service]
 Type=oneshot
 
-# Binary yolu — `cargo install` sonrası veya elle belirtilmeli
-ExecStart=%h/.cargo/bin/diskman
+# Binary yolu (pacman paketi /usr/bin/diskman altına kurar)
+ExecStart=/usr/bin/diskman
 
 # Oturum kapandığında diskman'ı çalıştırma
 RemainAfterExit=no
