@@ -24,7 +24,8 @@ pub fn mount(
         tracing::debug!("Mount noktası oluşturuldu: {}", mountpoint.display());
     }
 
-    let mut cmd = Command::new("mount");
+    let mut cmd = Command::new("sudo");
+    cmd.arg("mount");
 
     // Dosya sistemi tipi belirtildiyse -t ekle
     if let Some(fs) = fs_type {
@@ -75,8 +76,8 @@ pub fn umount(mountpoint: &PathBuf) -> Result<()> {
 
     tracing::info!("Umount yapılıyor: {}", mp_str);
 
-    let status = Command::new("umount")
-        .arg(mp_str)
+    let status = Command::new("sudo")
+        .args(["umount", mp_str])
         .status()
         .map_err(|e| DiskmanError::Mount(format!("umount çalıştırılamadı: {e}")))?;
 

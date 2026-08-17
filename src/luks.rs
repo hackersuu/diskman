@@ -42,8 +42,9 @@ fn open_with_keyfile(device_path: &str, mapper_name: &str, keyfile: &PathBuf) ->
         )));
     }
 
-    let status = Command::new("cryptsetup")
+    let status = Command::new("sudo")
         .args([
+            "cryptsetup",
             "luksOpen",
             "--batch-mode",
             "--key-file",
@@ -88,8 +89,8 @@ fn open_with_password(device_path: &str, mapper_name: &str) -> Result<()> {
     let password = password.trim_end_matches('\n');
 
     // Parolayı stdin üzerinden cryptsetup'a ver
-    let mut child = Command::new("cryptsetup")
-        .args(["luksOpen", "--batch-mode", device_path, mapper_name])
+    let mut child = Command::new("sudo")
+        .args(["cryptsetup", "luksOpen", "--batch-mode", device_path, mapper_name])
         .stdin(std::process::Stdio::piped())
         .spawn()
         .map_err(|e| DiskmanError::Luks(format!("cryptsetup spawn hatası: {e}")))?;
@@ -126,8 +127,8 @@ pub fn close_luks(mapper_name: &str) -> Result<()> {
         return Ok(());
     }
 
-    let status = Command::new("cryptsetup")
-        .args(["luksClose", mapper_name])
+    let status = Command::new("sudo")
+        .args(["cryptsetup", "luksClose", mapper_name])
         .status()
         .map_err(|e| DiskmanError::Luks(format!("cryptsetup luksClose çalıştırılamadı: {e}")))?;
 
