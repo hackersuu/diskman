@@ -119,6 +119,12 @@ fn blkid_details(device_path: &str) -> Result<BlockDevice> {
     })
 }
 
+/// Verilen blok cihazının (örneğin /dev/mapper/...) dosya sistemini blkid ile tespit et
+pub fn get_device_fstype(device_path: &str) -> Result<Option<String>> {
+    let details = blkid_details(device_path)?;
+    Ok(details.fs_type)
+}
+
 /// Bir cihazın /proc/mounts içinde zaten mount edilip edilmediğini kontrol et.
 pub fn is_mounted(device_path: &str) -> Result<bool> {
     let mounts = std::fs::read_to_string("/proc/mounts")

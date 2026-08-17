@@ -152,8 +152,19 @@ async fn main() {
         }
 
         // 5) Mount et
-        let fs_type = device.fs_type.as_deref();
-        match mounter::mount(&mount_device, &mountpoint, &disk.mount_options, fs_type) {
+        let fs_type = if disk.encrypted || device.is_luks() {
+            // LUKS açıldıktan sonra mapper cihazının içindeki gerçek dosya sistemini bul
+            match scanner::get_device_fstype(&mount_device) {
+                Ok(Some(fs)) => Some(fs),
+                _ => None, // Bulunamazsa çekirdek otomatik tespit etsin (-t verme)
+            }
+        } else if device.fs_type.as_deref() == Some("crypto_LUKS") {
+            None
+        } else {
+            device.fs_type.clone()
+        };
+
+        match mounter::mount(&mount_device, &mountpoint, &disk.mount_options, fs_type.as_deref()) {
             Ok(()) => {
                 info!(
                     "  [{disk_name}] ✓ Başarıyla bağlandı: {}",
