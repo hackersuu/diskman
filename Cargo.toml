@@ -3,6 +3,7 @@ name = "diskman"
 version = "0.1.0"
 edition = "2021"
 description = "Linux external disk auto-mounter with LUKS support"
+license = "GPL-2.0"
 authors = []
 
 [[bin]]

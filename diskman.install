@@ -1,0 +1,44 @@
+post_install() {
+    echo ""
+    echo "╔══════════════════════════════════════════════════════╗"
+    echo "║              diskman kuruldu!                        ║"
+    echo "╠══════════════════════════════════════════════════════╣"
+    echo "║  1. Config dosyası oluştur:                          ║"
+    echo "║     mkdir -p ~/.config/diskman                       ║"
+    echo "║     cp /usr/share/doc/diskman/diskman.toml.example \\ ║"
+    echo "║        ~/.config/diskman/config.toml                 ║"
+    echo "║                                                      ║"
+    echo "║  2. UUID'leri öğren:                                 ║"
+    echo "║     sudo blkid                                       ║"
+    echo "║                                                      ║"
+    echo "║  3. Config'i düzenle ve servisi etkinleştir:         ║"
+    echo "║     nano ~/.config/diskman/config.toml               ║"
+    echo "║     systemctl --user enable --now diskman.service    ║"
+    echo "║                                                      ║"
+    echo "║  4. Log izle:                                        ║"
+    echo "║     journalctl --user -u diskman -f                  ║"
+    echo "╚══════════════════════════════════════════════════════╝"
+    echo ""
+}
+
+post_upgrade() {
+    echo ""
+    echo ">>> diskman güncellendi. Servisi yeniden yükle:"
+    echo "    systemctl --user daemon-reload"
+    echo "    systemctl --user restart diskman.service"
+    echo ""
+}
+
+pre_remove() {
+    # Servis çalışıyorsa durdur
+    systemctl --user stop diskman.service 2>/dev/null || true
+    systemctl --user disable diskman.service 2>/dev/null || true
+}
+
+post_remove() {
+    echo ""
+    echo ">>> diskman kaldırıldı."
+    echo "    Config dosyası ~/.config/diskman/ konumunda bırakıldı."
+    echo "    Elle silmek için: rm -rf ~/.config/diskman"
+    echo ""
+}
