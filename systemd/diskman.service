@@ -1,0 +1,23 @@
+[Unit]
+Description=diskman — Yapılandırılmış diskleri otomatik bağla
+Documentation=https://github.com/user/diskman
+# Ağ gerekmez, oturum açıldıktan sonra çalışsın
+After=default.target
+
+[Service]
+Type=oneshot
+
+# Binary yolu — `cargo install` sonrası veya elle belirtilmeli
+ExecStart=%h/.cargo/bin/diskman
+
+# Oturum kapandığında diskman'ı çalıştırma
+RemainAfterExit=no
+
+# Hata olursa log'a yaz ama oturumu engelleme
+SuccessExitStatus=0 1
+
+# Ortam değişkeni (isteğe bağlı log seviyesi geçersiz kılma)
+# Environment=RUST_LOG=debug
+
+[Install]
+WantedBy=default.target

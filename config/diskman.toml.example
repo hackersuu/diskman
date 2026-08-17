@@ -1,0 +1,44 @@
+# diskman yapılandırma dosyası
+# Konum: ~/.config/diskman/config.toml  veya  /etc/diskman/config.toml
+#
+# SADECE bu dosyada tanımlı diskler bağlanır.
+# Tanımsız diskler hiçbir zaman dokunulmaz.
+
+[general]
+# Tüm mount noktalarının oluşturulacağı taban dizin
+mount_base = "/mnt/diskman"
+
+# Log seviyesi: trace | debug | info | warn | error
+log_level  = "info"
+
+# ──────────────────────────────────────────────
+# Normal (şifresiz) disk örneği
+# ──────────────────────────────────────────────
+[[disk]]
+# UUID (blkid komutuyla öğrenebilirsiniz: sudo blkid)
+uuid  = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+# İsteğe bağlı okunabilir etiket (mount noktası adı olarak da kullanılır)
+label = "Yedek"
+# Mount seçenekleri
+mount_options = "defaults,noatime"
+
+# ──────────────────────────────────────────────
+# Şifreli (LUKS) disk — keyfile ile
+# ──────────────────────────────────────────────
+[[disk]]
+uuid      = "yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy"
+label     = "GizliDisk"
+encrypted = true
+# Keyfile yolu — dosya sadece root tarafından okunabilir olmalı (chmod 400)
+keyfile   = "/etc/diskman/keys/gizlidisk.key"
+mount_options = "defaults,noatime"
+
+# ──────────────────────────────────────────────
+# Şifreli (LUKS) disk — parola sorulsun
+# (keyfile satırı olmadığında systemd-ask-password devreye girer)
+# ──────────────────────────────────────────────
+[[disk]]
+uuid      = "zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz"
+label     = "ParolaliDisk"
+encrypted = true
+mount_options = "defaults,noatime,uid=1000,gid=1000"
