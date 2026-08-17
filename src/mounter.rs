@@ -13,14 +13,19 @@ pub fn mount(
     options: &str,
     fs_type: Option<&str>,
 ) -> Result<()> {
-    // Mount noktası dizinini oluştur
+    // Mount noktası dizinini oluştur (sudo ile)
     if !mountpoint.exists() {
-        std::fs::create_dir_all(mountpoint).map_err(|e| {
-            DiskmanError::Mount(format!(
-                "Mount noktası oluşturulamadı '{}': {e}",
+        let status = Command::new("sudo")
+            .args(["mkdir", "-p", mountpoint.to_str().unwrap_or("")])
+            .status()
+            .map_err(|e| DiskmanError::Mount(format!("mkdir çalıştırılamadı: {e}")))?;
+
+        if !status.success() {
+            return Err(DiskmanError::Mount(format!(
+                "Mount noktası oluşturulamadı: {}",
                 mountpoint.display()
-            ))
-        })?;
+            )));
+        }
         tracing::debug!("Mount noktası oluşturuldu: {}", mountpoint.display());
     }
 

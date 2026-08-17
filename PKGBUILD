@@ -1,6 +1,6 @@
 # Maintainer: hacker_su
 pkgname=diskman
-pkgver=0.1.1
+pkgver=0.1.2
 pkgrel=1
 pkgdesc="Config'de tanımlı harici diskleri oturum açılışında otomatik bağlayan systemd kullanıcı servisi (LUKS destekli)"
 arch=('x86_64' 'aarch64')

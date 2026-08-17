@@ -97,8 +97,8 @@ async fn main() {
         // 2) LUKS mu? Gerekirse aç
         let mount_device = if disk.encrypted || device.is_luks() {
             let mapper_name = luks::make_mapper_name(
-                device.uuid.as_deref(),
-                device.label.as_deref(),
+                disk.label.as_deref().or(device.label.as_deref()),
+                disk.uuid.as_deref().or(device.uuid.as_deref()),
             );
 
             if cli.dry_run {
@@ -137,8 +137,8 @@ async fn main() {
         // 4) Mount noktasını belirle: /mnt/diskman/<label|uuid>
         let mountpoint = mounter::make_mountpoint(
             mount_base,
-            device.label.as_deref(),
-            device.uuid.as_deref(),
+            disk.label.as_deref().or(device.label.as_deref()),
+            disk.uuid.as_deref().or(device.uuid.as_deref()),
         );
 
         if cli.dry_run {
