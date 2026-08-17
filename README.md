@@ -26,7 +26,7 @@
 ### 1. Arch Linux / Pacman Paketi ile Kurulum (Önerilen)
 
 ```bash
-git clone https://github.com/hacker_su/diskman.git
+git clone https://github.com/hackersuu/diskman.git
 cd diskman
 
 # Paketi derleyin ve sisteme kurun:
@@ -36,7 +36,7 @@ makepkg -si
 ### 2. Kaynak Koddan Manuel Kurulum
 
 ```bash
-git clone https://github.com/hacker_su/diskman.git
+git clone https://github.com/hackersuu/diskman.git
 cd diskman
 
 # Release derlemesi

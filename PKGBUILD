@@ -4,7 +4,7 @@ pkgver=0.1.0
 pkgrel=1
 pkgdesc="Config'de tanımlı harici diskleri oturum açılışında otomatik bağlayan systemd kullanıcı servisi (LUKS destekli)"
 arch=('x86_64' 'aarch64')
-url="https://github.com/hacker_su/diskman"
+url="https://github.com/hackersuu/diskman"
 license=('GPL2')
 
 # Çalışma zamanı bağımlılıkları
